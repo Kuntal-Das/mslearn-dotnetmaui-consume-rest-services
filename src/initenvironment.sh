@@ -34,7 +34,14 @@ echo "Using Azure resource group $resourceGroupName."
 webappname=mslearnpartsserver$RANDOM$RANDOM
 
 cd webservice/PartsServer
-az webapp up -n $webappname --resource-group $resourceGroupName --sku FREE --plan $webappname
+
+dotnet restore
+dotnet build --configuration RELEASE 
+Compress-Archive ".\bin\Release\net8.0\publish\*" ".\bin\Release\net8.0\publish\app.zip" -Force
+
+az webapp deployment source config-zip -g $resourceGroupName --sku FREE --plan $webappname --src ".\bin\Release\net8.0\publish\app.zip"
+
+# az webapp up -n $webappname --resource-group $resourceGroupName --sku FREE --plan $webappname
 
 echo "Web app deployed! Here is the url to use in the app:"
 echo https://$webappname.azurewebsites.net
