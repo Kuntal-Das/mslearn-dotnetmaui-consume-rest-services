@@ -39,9 +39,10 @@ dotnet restore
 dotnet publish --configuration RELEASE 
 zip -rf ".\bin\Release\net8.0\publish\app.zip" ".\bin\Release\net8.0\publish\*"
 
-az webapp deployment source config-zip -g $resourceGroupName --src ".\bin\Release\net8.0\publish\app.zip"
+az webapp deployment source config-zip -n $webappname -g $resourceGroupName --src ".\bin\Release\net8.0\publish\app.zip"
 
-az webapp up -n $webappname --resource-group $resourceGroupName --sku FREE --plan $webappname
+az webapp up --sku FREE --plan $webappname
+# az webapp up -n $webappname --resource-group $resourceGroupName --sku FREE --plan $webappname
 
 echo "Web app deployed! Here is the url to use in the app:"
 echo https://$webappname.azurewebsites.net
