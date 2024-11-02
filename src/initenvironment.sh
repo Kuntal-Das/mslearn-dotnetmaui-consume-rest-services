@@ -39,9 +39,8 @@ dotnet restore
 dotnet publish --configuration RELEASE 
 Compress-Archive -rf ".\bin\Release\net8.0\publish\*" ".\bin\Release\net8.0\publish\app.zip"
 
-az webapp deployment source config-zip -n $webappname -g $resourceGroupName --src ".\bin\Release\net8.0\publish\app.zip"
+az webapp deployment -n $webappname -g $resourceGroupName --src-path ".\bin\Release\net8.0\publish\app.zip" --type zip --async true --clean true --restart true
 
-az webapp up --sku FREE --plan $webappname
 # az webapp up -n $webappname --resource-group $resourceGroupName --sku FREE --plan $webappname
 
 echo "Web app deployed! Here is the url to use in the app:"
