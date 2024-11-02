@@ -35,15 +35,15 @@ webappname=mslearnpartsserver$RANDOM$RANDOM
 
 cd webservice/PartsServer
 
-dotnet restore
-dotnet publish --configuration RELEASE 
-cd bin/Release/net8.0/publish
-zip -rfv app.zip *
-cd -
+# dotnet restore
+# dotnet publish --configuration RELEASE 
+# cd bin/Release/net8.0/publish
+# zip -rv app.zip *
+# cd -
 
-az webapp deployment -n $webappname -g $resourceGroupName --src-path "/bin/Release/net8.0/publish/app.zip" --async true --clean true --restart true
+# az webapp deployment -n $webappname -g $resourceGroupName --src-path "/bin/Release/net8.0/publish/app.zip" --async true --clean true --restart true
 
-# az webapp up -n $webappname --resource-group $resourceGroupName --sku FREE --plan $webappname
+az webapp up -n $webappname --resource-group $resourceGroupName --sku FREE --plan $webappname
 
 echo "Web app deployed! Here is the url to use in the app:"
 echo https://$webappname.azurewebsites.net
