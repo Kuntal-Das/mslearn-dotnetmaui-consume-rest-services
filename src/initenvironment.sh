@@ -37,7 +37,11 @@ cd webservice/PartsServer
 
 dotnet restore
 dotnet publish --configuration RELEASE 
-Compress-Archive -rf ".\bin\Release\net8.0\publish\*" ".\bin\Release\net8.0\publish\app.zip"
+cd bin\\Release\\net8.0\\publish\\
+zip -rfv app.zip *
+cd -
+
+# Compress-Archive -rf ".\bin\Release\net8.0\publish\*" ".\bin\Release\net8.0\publish\app.zip"
 
 az webapp deployment -n $webappname -g $resourceGroupName --src-path ".\bin\Release\net8.0\publish\app.zip" --type zip --async true --clean true --restart true
 
