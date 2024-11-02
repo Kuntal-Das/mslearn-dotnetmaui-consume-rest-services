@@ -37,7 +37,7 @@ cd webservice/PartsServer
 
 dotnet restore
 dotnet publish --configuration RELEASE 
-cd bin\\Release\\net8.0\\publish\\
+cd bin\Release\net8.0\publish
 zip -rfv app.zip *
 cd -
 
