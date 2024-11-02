@@ -34,7 +34,7 @@ echo "Using Azure resource group $resourceGroupName."
 webappname=mslearnpartsserver$RANDOM$RANDOM
 
 cd webservice/PartsServer
-az webapp up -n $webappname --resource-group $resourceGroupName --sku FREE --plan $webappname --src-path ".\dotnetapp\dotnetzipapp.zip"
+az webapp up -n $webappname --resource-group $resourceGroupName --sku FREE --plan $webappname
 
 echo "Web app deployed! Here is the url to use in the app:"
 echo https://$webappname.azurewebsites.net
