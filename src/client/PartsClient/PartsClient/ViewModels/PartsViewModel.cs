@@ -24,7 +24,7 @@ public partial class PartsViewModel : ObservableObject
 
     [ObservableProperty]
     //Part _selectedPart;
-    Product _selectedPart;
+    Product _selectedProduct;
 
     public PartsViewModel()
     {
@@ -42,17 +42,17 @@ public partial class PartsViewModel : ObservableObject
     [RelayCommand]
     async Task PartSelected()
     {
-        if (SelectedPart == null)
+        if (SelectedProduct == null)
             return;
 
         var navigationParameter = new Dictionary<string, object>()
         {
-            { "part", SelectedPart }
+            { "part", SelectedProduct }
         };
 
         await Shell.Current.GoToAsync("addpart", navigationParameter);
 
-        MainThread.BeginInvokeOnMainThread(() => SelectedPart = null);
+        MainThread.BeginInvokeOnMainThread(() => SelectedProduct = null);
     }
 
     [RelayCommand]

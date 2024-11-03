@@ -12,7 +12,7 @@
                      Command="{Binding LoadDataCommand}">
             <CollectionView  Margin="30,20,30,30"
                              ItemsSource="{Binding Parts}"                             
-                             SelectedItem="{Binding SelectedPart, Mode=TwoWay}"
+                             SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"
                              SelectionChangedCommand="{Binding PartSelectedCommand}"
                              SelectionMode="Single">
                 <CollectionView.ItemsLayout>

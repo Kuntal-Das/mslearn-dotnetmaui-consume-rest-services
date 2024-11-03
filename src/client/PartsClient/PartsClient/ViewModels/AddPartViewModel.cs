@@ -14,6 +14,7 @@ public partial class AddPartViewModel : ObservableObject
     [ObservableProperty] string _productTags;
 
     [ObservableProperty] string _productBrand;
+    internal Product _productToDisplay;
 
     public AddPartViewModel()
     {
@@ -44,15 +45,15 @@ public partial class AddPartViewModel : ObservableObject
     [RelayCommand]
     async Task UpdatePart()
     {
-        Part partToSave = new()
-        {
-            PartID = ProductId,
-            PartName = ProductTitle,
-            PartType = ProductBrand,
-            Suppliers = ProductTags.Split(",").ToList()
-        };
+        Product productToSave = _productToDisplay ?? new();
 
-        await PartsManager.Update(partToSave);
+        productToSave.Id = int.Parse(ProductId);
+        productToSave.Title = ProductTitle;
+        productToSave.Brand = ProductBrand;
+        productToSave.Tags = ProductTags.Split(",").ToList();
+
+
+        await ProductsManger.Update(productToSave);
 
         WeakReferenceMessenger.Default.Send(new RefreshMessage(true));
 
@@ -65,7 +66,7 @@ public partial class AddPartViewModel : ObservableObject
         if (string.IsNullOrWhiteSpace(ProductId))
             return;
 
-        await PartsManager.Delete(ProductId);
+        await ProductsManger.Delete(ProductId);
 
         WeakReferenceMessenger.Default.Send(new RefreshMessage(true));
 

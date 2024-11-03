@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -103,9 +104,19 @@ namespace PartsClient.Data
             return insertedProduct;
         }
 
-        public static async Task Update(Product part)
+        public static async Task Update(Product product)
         {
-            throw new NotImplementedException();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+                return;
+
+            var msg = new HttpRequestMessage(HttpMethod.Put, $"auth/products/{product.Id}");
+            msg.Content = JsonContent.Create(product);
+            var client = await GetClient();
+            var response = await client.SendAsync(msg);
+
+            // var jsonContent = new StringContent(JsonSerializer.Serialize(product), Encoding.UTF8, "application/json");
+            // var response = await client.PostAsJsonAsync($"auth/products/{product.Id}", jsonContent);
+            response.EnsureSuccessStatusCode();
         }
 
         public static async Task Delete(string partID)

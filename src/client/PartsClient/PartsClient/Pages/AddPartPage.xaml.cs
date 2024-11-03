@@ -3,7 +3,7 @@ using PartsClient.ViewModels;
 
 namespace PartsClient.Pages;
 
-[QueryProperty("PartToDisplay", "part")]
+[QueryProperty(nameof(ProductToDisplay), "part")]
 public partial class AddPartPage : ContentPage
 {
     AddPartViewModel viewModel;
@@ -19,7 +19,7 @@ public partial class AddPartPage : ContentPage
     // Part _partToDisplay;
     Product _productToDisplay;
 
-    public Product PartToDisplay
+    public Product ProductToDisplay
     {
         get => _productToDisplay;
         set
@@ -29,7 +29,8 @@ public partial class AddPartPage : ContentPage
 
             _productToDisplay = value;
 
-            viewModel.ProductId = _productToDisplay.Id.ToString();
+            viewModel._productToDisplay = _productToDisplay;
+            viewModel.ProductId = _productToDisplay.Id.ToString().PadLeft(8,'0');
             viewModel.ProductTitle = _productToDisplay.Title;
             viewModel.ProductTags = _productToDisplay.TagsAsString;
             viewModel.ProductBrand = _productToDisplay.Brand;
