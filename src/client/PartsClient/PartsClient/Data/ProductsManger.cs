@@ -93,7 +93,7 @@ namespace PartsClient.Data
                 return new Product();
 
             var client = await GetClient();
-            var msg = new HttpRequestMessage(HttpMethod.Post, "auth/parts");
+            var msg = new HttpRequestMessage(HttpMethod.Post, "auth/products/add");
             msg.Content = JsonContent.Create<Product>(product);
             var response = await client.SendAsync(msg);
             response.EnsureSuccessStatusCode();

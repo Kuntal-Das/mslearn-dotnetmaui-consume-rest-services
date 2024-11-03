@@ -6,27 +6,23 @@ using PartsClient.Data;
 namespace PartsClient.ViewModels;
 
 public partial class AddPartViewModel : ObservableObject
-{ 
-    [ObservableProperty]
-    string _partID;
+{
+    [ObservableProperty] string _productId;
 
-    [ObservableProperty]
-    string _partName;
+    [ObservableProperty] string _productTitle;
 
-    [ObservableProperty]
-    string _suppliers;
+    [ObservableProperty] string _productTags;
 
-    [ObservableProperty]
-    string _partType;
-    
+    [ObservableProperty] string _productBrand;
+
     public AddPartViewModel()
-    {            
+    {
     }
 
     [RelayCommand]
     async Task SaveData()
     {
-        if (string.IsNullOrWhiteSpace(PartID))
+        if (string.IsNullOrWhiteSpace(ProductId))
             await InsertPart();
         else
             await UpdatePart();
@@ -36,7 +32,8 @@ public partial class AddPartViewModel : ObservableObject
     [RelayCommand]
     async Task InsertPart()
     {
-        await PartsManager.Add(PartName, Suppliers, PartType);
+        // await PartsManager.Add(PartName, Suppliers, PartType);
+        ProductsManger.Add(ProductTitle, ProductTags, ProductBrand);
 
         WeakReferenceMessenger.Default.Send(new RefreshMessage(true));
 
@@ -49,10 +46,10 @@ public partial class AddPartViewModel : ObservableObject
     {
         Part partToSave = new()
         {
-            PartID = PartID,
-            PartName = PartName,
-            PartType = PartType,
-            Suppliers = Suppliers.Split(",").ToList()
+            PartID = ProductId,
+            PartName = ProductTitle,
+            PartType = ProductBrand,
+            Suppliers = ProductTags.Split(",").ToList()
         };
 
         await PartsManager.Update(partToSave);
@@ -65,10 +62,10 @@ public partial class AddPartViewModel : ObservableObject
     [RelayCommand]
     async Task DeletePart()
     {
-        if (string.IsNullOrWhiteSpace(PartID))
+        if (string.IsNullOrWhiteSpace(ProductId))
             return;
 
-        await PartsManager.Delete(PartID);
+        await PartsManager.Delete(ProductId);
 
         WeakReferenceMessenger.Default.Send(new RefreshMessage(true));
 
