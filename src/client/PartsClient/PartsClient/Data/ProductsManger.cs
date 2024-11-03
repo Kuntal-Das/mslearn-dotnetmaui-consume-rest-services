@@ -119,9 +119,17 @@ namespace PartsClient.Data
             response.EnsureSuccessStatusCode();
         }
 
-        public static async Task Delete(string partID)
+        public static async Task Delete(string productId)
         {
-            throw new NotImplementedException();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+                return;
+
+            HttpRequestMessage msg = new(HttpMethod.Delete, $"auth/products/{productId}");
+
+            var client = await GetClient();
+
+            var response = await client.SendAsync(msg);
+            response.EnsureSuccessStatusCode();
         }
     }
 }
