@@ -6,30 +6,33 @@ namespace PartsClient.Pages;
 [QueryProperty("PartToDisplay", "part")]
 public partial class AddPartPage : ContentPage
 {
-	AddPartViewModel viewModel;
-	public AddPartPage()
-	{
-		InitializeComponent();
+    AddPartViewModel viewModel;
 
-		viewModel = new AddPartViewModel();
-		BindingContext = viewModel;
+    public AddPartPage()
+    {
+        InitializeComponent();
+
+        viewModel = new AddPartViewModel();
+        BindingContext = viewModel;
     }
 
-	Part _partToDisplay;
-    public Part PartToDisplay 
-	{
-		get => _partToDisplay;
-		set
+    // Part _partToDisplay;
+    Product _productToDisplay;
+
+    public Product PartToDisplay
+    {
+        get => _productToDisplay;
+        set
         {
-			if (_partToDisplay == value)
-				return;
+            if (_productToDisplay == value)
+                return;
 
-			_partToDisplay = value;
+            _productToDisplay = value;
 
-			viewModel.PartID = _partToDisplay.PartID;
-			viewModel.PartName = _partToDisplay.PartName;
-			viewModel.Suppliers = _partToDisplay.SupplierString;
-			viewModel.PartType = _partToDisplay.PartType;
+            viewModel.ProductId = _productToDisplay.Id.ToString();
+            viewModel.ProductTitle = _productToDisplay.Title;
+            viewModel.ProductTags = _productToDisplay.TagsAsString;
+            viewModel.ProductBrand = _productToDisplay.Brand;
         }
-	}
+    }
 }

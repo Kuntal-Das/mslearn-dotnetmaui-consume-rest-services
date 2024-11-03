@@ -10,7 +10,8 @@ namespace PartsClient.ViewModels;
 public partial class PartsViewModel : ObservableObject
 {
     [ObservableProperty]
-    ObservableCollection<Part> _parts;
+    //ObservableCollection<Part> _parts;
+    ObservableCollection<Product> _parts;
 
 
     [ObservableProperty]
@@ -22,11 +23,13 @@ public partial class PartsViewModel : ObservableObject
 
 
     [ObservableProperty]
-    Part _selectedPart;
+    //Part _selectedPart;
+    Product _selectedPart;
 
     public PartsViewModel()
-    {            
-        _parts = new ObservableCollection<Part>();
+    {
+        //_parts = new ObservableCollection<Part>();
+        _parts = new ObservableCollection<Product>();
 
         WeakReferenceMessenger.Default.Register<RefreshMessage>(this, async (r, m) =>
         {
@@ -49,7 +52,7 @@ public partial class PartsViewModel : ObservableObject
 
         await Shell.Current.GoToAsync("addpart", navigationParameter);
 
-        MainThread.BeginInvokeOnMainThread(() => SelectedPart = null);            
+        MainThread.BeginInvokeOnMainThread(() => SelectedPart = null);
     }
 
     [RelayCommand]
@@ -63,20 +66,26 @@ public partial class PartsViewModel : ObservableObject
             IsRefreshing = true;
             IsBusy = true;
 
-            var partsCollection = await PartsManager.GetAll();
+            //var partsCollection = await PartsManager.GetAll();
+            var productsCollecton = await ProductsManger.GetAll();
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 Parts.Clear();
-                
-                foreach (Part part in partsCollection)
-                {                        
-                    Parts.Add(part);                        
+
+                //foreach (Part part in partsCollection)
+                foreach (var part in productsCollecton)
+                {
+                    Parts.Add(part);
                 }
             });
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
         finally
-        {    
+        {
             IsRefreshing = false;
             IsBusy = false;
         }
